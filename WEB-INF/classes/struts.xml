@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name = "rsgl" extends = "struts-default">
+		<interceptors>
+			<!-- 定义了一个名为loginFilter的拦截器 -->
+			<interceptor name = "loginFilter" class = "rsgl.tool.LoginFilter"></interceptor>
+			<!-- 定义了一个名为authorityFilter的拦截器 -->
+			<interceptor name = "authorityFilter" class = "rsgl.tool.AuthorityFilter"></interceptor>
+		</interceptors>
+		<!-- 全局跳转，凡名为login结果的均跳转到login.jsp -->
+		<global-results>
+			<result name = "login">/login.jsp</result>
+		</global-results>
+		<!-- 实现登录的action -->
+		<action name = "login" class = "usersAction" method = "login">
+			<result name = "success">/indexAdmin.jsp</result>
+			<result name = "error">/login.jsp</result>
+		</action>
+		<!-- 实现更改密码的action -->
+		<action name = "usersSetPwdView" class = "usersAction" method = "usersSetPwdView">
+			<result name = "success">/usersSetPwdView.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+		</action>
+		<action name = "usersSetPwd" class = "usersAction" method = "usersSetPwd">
+			<result name = "success">/success.jsp</result>
+			<result name = "error">/error.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+		</action>
+		<!-- 实现退出的action -->
+		<action name = "logout" class = "usersAction" method = "logout">
+			<result name = "success">/login.jsp</result>
+		</action>
+		<!-- 实现用户增加功能 -->
+		<action name = "usersList" class = "usersAction" method = "usersList">
+			<result name = "success">/usersList.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "usersAddView" class = "usersAction" method = "usersAddView">
+			<result name = "success">/usersAddView.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "usersAdd" class = "usersAction" method = "usersAdd">
+			<result name = "success">/usersSuccess.jsp</result>
+			<result name = "error">/usersError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 用户删除的action -->
+		<action name = "usersDelete" class = "usersAction" method = "usersDelete">
+			<result name = "success">/usersSuccess.jsp</result>
+			<result name = "error">/usersError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 用户修改的action -->
+		<action name = "usersUpdateView" class = "usersAction" method = "usersUpdateView">
+			<result name = "success">/usersUpdateView.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "usersUpdate" class = "usersAction" method = "usersUpdate">
+			<result name = "success">/usersSuccess.jsp</result>
+			<result name = "error">/usersError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 用户重置密码 -->
+		<action name = "usersResetPwd" class = "usersAction" method = "usersResetPwd">
+			<result name = "success">/usersSuccess.jsp</result>
+			<result name = "error">/usersError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 部门表展现 -->
+		<action name = "bmbList" class = "bmbAction" method = "bmbList">
+			<result name = "success">/bmbList.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 实现部门增加 -->
+		<action name = "bmbAddView" class = "bmbAction" method = "bmbAddView">
+			<result name = "success">/bmbAddView.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "bmbAdd" class = "bmbAction" method = "bmbAdd">
+			<result name = "success">/bmbSuccess.jsp</result>
+			<result name = "error">/bmbError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 实现部门删除 -->
+		<action name = "bmbDelete" class = "bmbAction" method = "bmbDelete">
+			<result name = "success">/bmbSuccess.jsp</result>
+			<result name = "error">/bmbError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 部门修改的action -->
+		<action name = "bmbUpdateView" class = "bmbAction" method = "bmbUpdateView">
+			<result name = "success">/bmbUpdateView.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "bmbUpdate" class = "bmbAction" method = "bmbUpdate">
+			<result name = "success">/bmbSuccess.jsp</result>
+			<result name = "error">/bmbError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 职工表表展现 -->
+		<action name = "zgbList" class = "zgbAction" method = "zgbList">
+			<result name = "success">/zgbList.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 实现职工增加 -->
+		<action name = "zgbAddView" class = "zgbAction" method = "zgbAddView">
+			<result name = "success">/zgbAddView.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<action name = "zgbAdd" class = "zgbAction" method = "zgbAdd">
+			<result name = "success">/zgbSuccess.jsp</result>
+			<result name = "error">/zgbError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+		<!-- 实现职工删除 -->
+		<action name = "zgbDelete" class = "zgbAction" method = "zgbDelete">
+			<result name = "success">/zgbSuccess.jsp</result>
+			<result name = "error">/zgbError.jsp</result>
+			<result name = "none">/noAuthority.jsp</result>
+			<interceptor-ref name = "defaultStack"></interceptor-ref>
+			<interceptor-ref name = "loginFilter" />
+			<interceptor-ref name = "authorityFilter" />
+		</action>
+	</package>
+</struts>    

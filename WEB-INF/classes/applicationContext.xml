@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id = "usersDAO" class = "rsgl.dao.impl.UsersDAO">
+			<property name = "sessionFactory">
+				<ref bean = "sessionFactory"></ref>
+			</property>
+	</bean>
+	<bean id = "bmbDAO" class = "rsgl.dao.impl.BmbDAO">
+			<property name = "sessionFactory">
+				<ref bean = "sessionFactory"></ref>
+			</property>
+	</bean>
+	<bean id = "zgbDAO" class = "rsgl.dao.impl.ZgbDAO">
+			<property name = "sessionFactory">
+				<ref bean = "sessionFactory"></ref>
+			</property>
+	</bean>
+	<bean id = "usersService" class = "rsgl.service.impl.UsersService">
+			<property name = "usersDAO">
+				<ref bean = "usersDAO"></ref>
+			</property>
+	</bean>
+	<bean id = "bmbService" class = "rsgl.service.impl.BmbService">
+			<property name = "bmbDAO">
+				<ref bean = "bmbDAO"></ref>
+			</property>
+	</bean>
+	<bean id = "zgbService" class = "rsgl.service.impl.ZgbService">
+			<property name = "zgbDAO">
+				<ref bean = "zgbDAO"></ref>
+			</property>
+	</bean>
+	<bean id = "usersAction" class = "rsgl.action.UsersAction">
+			<property name = "usersService">
+				<ref bean = "usersService"></ref>
+			</property>
+	</bean>
+	<bean id = "bmbAction" class = "rsgl.action.BmbAction">
+			<property name = "bmbService">
+				<ref bean = "bmbService"></ref>
+			</property>
+			<property name = "zgbService">
+				<ref bean = "zgbService"></ref>
+			</property>
+	</bean>
+	<bean id = "zgbAction" class = "rsgl.action.ZgbAction">
+			<property name = "zgbService">
+				<ref bean = "zgbService"></ref>
+			</property>
+			<property name = "bmbService">
+				<ref bean = "bmbService"></ref>
+			</property>
+	</bean>
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://localhost:3306/rsgl"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="qqwwee123520"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+       			<prop key="hibernate.format_sql">true</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>rsgl/vo/Users.hbm.xml</value>
+				<value>rsgl/vo/Bmb.hbm.xml</value>
+				<value>rsgl/vo/Zgb.hbm.xml</value></list>
+		</property></bean></beans>
